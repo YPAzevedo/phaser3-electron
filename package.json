@@ -1,0 +1,12 @@
+{
+  "name": "phaser3",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^9.0.4"
+  }
+}
