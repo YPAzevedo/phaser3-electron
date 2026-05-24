@@ -1,0 +1,11 @@
+# Hold packages for 7 days (10080 minutes) after publish to mitigate
+# compromised or yanked releases reaching this project.
+minimumReleaseAge: 10080
+
+# Verify package tarball integrity against the lockfile on every install.
+verifyStoreIntegrity: true
+
+# Block lifecycle scripts by default; only these packages may run them.
+allowBuilds:
+  electron-winstaller: true
+  esbuild: true
