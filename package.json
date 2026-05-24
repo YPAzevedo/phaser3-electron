@@ -2,14 +2,9 @@
   "name": "phaser3-electron",
   "version": "2.0.0",
   "description": "Phaser 3 + Electron + TypeScript template",
-  "main": "./out/main/index.js",
   "license": "MIT",
   "type": "module",
-  "packageManager": "pnpm@11.3.0",
-  "engines": {
-    "node": ">=22",
-    "pnpm": ">=11"
-  },
+  "main": "./out/main/index.js",
   "scripts": {
     "dev": "electron-vite dev",
     "start": "electron-vite preview",
@@ -20,6 +15,11 @@
     "typecheck": "pnpm run typecheck:node && pnpm run typecheck:web && pnpm run typecheck:test",
     "test": "vitest run",
     "test:watch": "vitest",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "check": "pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test",
     "build:unpack": "pnpm run build && electron-builder --dir",
     "build:win": "pnpm run build && electron-builder --win",
     "build:mac": "pnpm run build && electron-builder --mac",
@@ -33,8 +33,15 @@
     "electron": "^42.1.0",
     "electron-builder": "^26.8.1",
     "electron-vite": "^5.0.0",
+    "oxfmt": "^0.50.0",
+    "oxlint": "^1.65.0",
     "typescript": "^6.0.3",
     "vite": "^7.3.3",
     "vitest": "^4.1.6"
-  }
+  },
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=11"
+  },
+  "packageManager": "pnpm@11.3.0"
 }

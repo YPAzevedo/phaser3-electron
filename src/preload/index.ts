@@ -1,6 +1,6 @@
-import { contextBridge } from 'electron'
+import { contextBridge } from "electron";
 
-contextBridge.exposeInMainWorld('app', {
+contextBridge.exposeInMainWorld("app", {
   platform: process.platform,
   versions: process.versions,
-})
+});

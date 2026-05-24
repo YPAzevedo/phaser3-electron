@@ -1,10 +1,10 @@
-export {}
+export {};
 
 declare global {
   interface Window {
     app: {
-      platform: NodeJS.Platform
-      versions: NodeJS.ProcessVersions
-    }
+      platform: NodeJS.Platform;
+      versions: NodeJS.ProcessVersions;
+    };
   }
 }
