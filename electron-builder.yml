@@ -1,0 +1,25 @@
+appId: com.phaser3.electron
+productName: phaser3-electron
+directories:
+  buildResources: resources
+  output: dist
+files:
+  - "!**/.vscode/*"
+  - "!src/*"
+  - "!electron.vite.config.{js,ts,mjs,cjs}"
+  - "!tsconfig*.json"
+  - "!{.eslintrc.cjs,.prettierrc,.prettierignore,.editorconfig}"
+asarUnpack:
+  - resources/**
+win:
+  target:
+    - nsis
+mac:
+  target:
+    - dmg
+  category: public.app-category.games
+linux:
+  target:
+    - AppImage
+  category: Game
+npmRebuild: false

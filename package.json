@@ -1,12 +1,31 @@
 {
-  "name": "phaser3",
-  "version": "1.0.0",
-  "main": "main.js",
+  "name": "phaser3-electron",
+  "version": "2.0.0",
+  "description": "Phaser 3 + Electron + TypeScript template",
+  "main": "./out/main/index.js",
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "start": "electron ."
+    "dev": "electron-vite dev",
+    "start": "electron-vite preview",
+    "build": "electron-vite build",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web",
+    "build:unpack": "npm run build && electron-builder --dir",
+    "build:win": "npm run build && electron-builder --win",
+    "build:mac": "npm run build && electron-builder --mac",
+    "build:linux": "npm run build && electron-builder --linux"
   },
   "dependencies": {
-    "electron": "^9.0.4"
+    "phaser": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "electron": "^42.2.0",
+    "electron-builder": "^26.8.1",
+    "electron-vite": "^5.0.0",
+    "typescript": "^6.0.3",
+    "vite": "^7.3.3"
   }
 }
