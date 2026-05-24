@@ -16,7 +16,10 @@
     "build": "electron-vite build",
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
-    "typecheck": "pnpm run typecheck:node && pnpm run typecheck:web",
+    "typecheck:test": "tsc --noEmit -p tsconfig.test.json --composite false",
+    "typecheck": "pnpm run typecheck:node && pnpm run typecheck:web && pnpm run typecheck:test",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "build:unpack": "pnpm run build && electron-builder --dir",
     "build:win": "pnpm run build && electron-builder --win",
     "build:mac": "pnpm run build && electron-builder --mac",
@@ -31,6 +34,7 @@
     "electron-builder": "^26.8.1",
     "electron-vite": "^5.0.0",
     "typescript": "^6.0.3",
-    "vite": "^7.3.3"
+    "vite": "^7.3.3",
+    "vitest": "^4.1.6"
   }
 }

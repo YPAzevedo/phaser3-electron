@@ -1,11 +1,18 @@
 import Phaser from 'phaser'
+import { computePlayerIntent } from '../../../game/playerControls'
+import {
+  type ScoreState,
+  collectStar,
+  formatScore,
+  initialScore,
+} from '../../../game/scoring'
 
 type ArcadePhysicsCallback = Phaser.Types.Physics.Arcade.ArcadePhysicsCallback
 
 export class GameScene extends Phaser.Scene {
   private player!: Phaser.Physics.Arcade.Sprite
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-  private score = 0
+  private scoreState: ScoreState = initialScore()
   private scoreText!: Phaser.GameObjects.Text
 
   constructor() {
@@ -71,36 +78,37 @@ export class GameScene extends Phaser.Scene {
       )
     })
 
-    this.scoreText = this.add.text(16, 16, 'score: 0', {
+    this.scoreText = this.add.text(16, 16, formatScore(this.scoreState), {
       fontSize: '32px',
       color: '#000',
     })
 
     this.physics.add.collider(this.player, platforms)
     this.physics.add.collider(stars, platforms)
-    this.physics.add.overlap(this.player, stars, this.collectStar, undefined, this)
+    this.physics.add.overlap(this.player, stars, this.onStarOverlap, undefined, this)
   }
 
   update(): void {
-    if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-160)
-      this.player.anims.play('left', true)
-    } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(160)
-      this.player.anims.play('right', true)
-    } else {
-      this.player.setVelocityX(0)
-      this.player.anims.play('turn')
-    }
+    const intent = computePlayerIntent(
+      {
+        left: this.cursors.left.isDown,
+        right: this.cursors.right.isDown,
+        up: this.cursors.up.isDown,
+      },
+      this.player.body!.touching.down,
+    )
 
-    if (this.cursors.up.isDown && this.player.body!.touching.down) {
-      this.player.setVelocityY(-330)
+    this.player.setVelocityX(intent.velocityX)
+    this.player.anims.play(intent.animation, intent.animation !== 'turn')
+
+    if (intent.jumpVelocity !== null) {
+      this.player.setVelocityY(intent.jumpVelocity)
     }
   }
 
-  private collectStar: ArcadePhysicsCallback = (_player, star) => {
+  private onStarOverlap: ArcadePhysicsCallback = (_player, star) => {
     ;(star as Phaser.Physics.Arcade.Sprite).disableBody(true, true)
-    this.score += 10
-    this.scoreText.setText('Score: ' + this.score)
+    this.scoreState = collectStar(this.scoreState)
+    this.scoreText.setText(formatScore(this.scoreState))
   }
 }
