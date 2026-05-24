@@ -1,12 +1,48 @@
 {
-  "name": "phaser3",
-  "version": "1.0.0",
-  "main": "main.js",
+  "name": "phaser3-electron",
+  "version": "2.0.0",
+  "description": "Phaser 3 + Electron + TypeScript template",
   "license": "MIT",
+  "type": "module",
+  "main": "./out/main/index.js",
   "scripts": {
-    "start": "electron ."
+    "dev": "electron-vite dev",
+    "start": "electron-vite preview",
+    "build": "electron-vite build",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
+    "typecheck:test": "tsc --noEmit -p tsconfig.test.json --composite false",
+    "typecheck": "pnpm run typecheck:node && pnpm run typecheck:web && pnpm run typecheck:test",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "check": "pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test",
+    "build:unpack": "pnpm run build && electron-builder --dir",
+    "build:win": "pnpm run build && electron-builder --win",
+    "build:mac": "pnpm run build && electron-builder --mac",
+    "build:linux": "pnpm run build && electron-builder --linux"
   },
   "dependencies": {
-    "electron": "^9.0.4"
-  }
+    "phaser": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.8.0",
+    "electron": "^42.1.0",
+    "electron-builder": "^26.8.1",
+    "electron-vite": "^5.0.0",
+    "eslint": "^9.39.4",
+    "oxfmt": "^0.50.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.3",
+    "vite": "^7.3.3",
+    "vitest": "^4.1.6"
+  },
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=11"
+  },
+  "packageManager": "pnpm@11.3.0"
 }
